@@ -158,36 +158,37 @@ npmi.on("close", (code) => {
 
           const tsc = exec("tsc");
           tsc.on("close", (code) => {
-            if (code === 0) {
-              fs.copyFileSync("package.json", "dist/package.json");
-              fs.copyFileSync("README.md", "dist/README.md");
-              fs.copyFileSync("LICENSE", "dist/LICENSE");
-              fs.copyFileSync("gramjs/tl/api.d.ts", "dist/tl/api.d.ts");
-              fs.copyFileSync("gramjs/define.d.ts", "dist/define.d.ts");
-              renameFiles("dist", "delete");
-              const npm_publish = exec("npm publish --tag latest", {
-                cwd: "dist",
-              });
-              npm_publish.stdout.on("data", function (data) {
-                console.log(data.toString());
-              });
+            fs.copyFileSync("package.json", "dist/package.json");
+            fs.copyFileSync("README.md", "dist/README.md");
+            fs.copyFileSync("LICENSE", "dist/LICENSE");
+            fs.copyFileSync("gramjs/tl/api.d.ts", "dist/tl/api.d.ts");
+            fs.copyFileSync("gramjs/define.d.ts", "dist/define.d.ts");
+            renameFiles("dist", "delete");
+            const npm_publish = exec("npm publish --tag latest", {
+              cwd: "dist",
+            });
+            npm_publish.stdout.on("data", function (data) {
+              console.log(data.toString());
+            });
 
-              npm_publish.stderr.on("data", function (data) {
-                console.error(data.toString());
-              });
-              npm_publish.on("close", (code) => {
-                if (code === 0) {
-                  console.log("=====================================");
-                  console.log("FINISHED UPLOADING NODE VERSION");
-                  console.log("=====================================");
-                } else {
-                  throw new Error("something went wrong");
-                }
-              });
-            } else {
-              console.log(code);
-              throw new Error("Error happened");
-            }
+            npm_publish.stderr.on("data", function (data) {
+              console.error(data.toString());
+            });
+            npm_publish.on("close", (code) => {
+              if (code === 0) {
+                console.log("=====================================");
+                console.log("FINISHED UPLOADING NODE VERSION");
+                console.log("=====================================");
+              } else {
+                throw new Error("something went wrong");
+              }
+            });
+            // if (code === 0) {
+        
+            // } else {
+            //   console.log(code);
+            //   throw new Error("Error happened");
+            // }
           });
         });
       } else {
