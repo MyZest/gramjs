@@ -60,36 +60,36 @@ function copyFolderSync(from, to) {
   });
 }
 
-fs.rmSync("browser", { recursive: true, force: true });
-fs.rmSync("tempBrowser", { recursive: true, force: true });
-copyFolderSync("gramjs", "tempBrowser");
-addBuffer("tempBrowser");
-// easier that writing two files smh
-const tsconfig = fs.readFileSync("tsconfig.json", "utf8");
-let newTsconfig = tsconfig.replace(/\.\/dist/g, "./browser");
-newTsconfig = newTsconfig.replace(/gramjs/g, "tempBrowser");
-fs.writeFileSync("tsconfig.json", newTsconfig, "utf8");
+// fs.rmSync("browser", { recursive: true, force: true });
+// fs.rmSync("tempBrowser", { recursive: true, force: true });
+// copyFolderSync("gramjs", "tempBrowser");
+// addBuffer("tempBrowser");
+// // easier that writing two files smh
+// const tsconfig = fs.readFileSync("tsconfig.json", "utf8");
+// let newTsconfig = tsconfig.replace(/\.\/dist/g, "./browser");
+// newTsconfig = newTsconfig.replace(/gramjs/g, "tempBrowser");
+// fs.writeFileSync("tsconfig.json", newTsconfig, "utf8");
 const packageJSON = JSON.parse(fs.readFileSync("package.json", "utf8"));
 const oldValueStorage = packageJSON.dependencies["node-localstorage"];
 const oldValueSocks = packageJSON.dependencies["socks"];
-delete packageJSON.dependencies["node-localstorage"];
-delete packageJSON.dependencies["socks"];
-const oldVersion = packageJSON.version.split(".");
-+oldVersion[2]++;
-packageJSON.version = oldVersion.join(".");
-console.log("browser version is", packageJSON.version);
-fs.writeFileSync(
-  "package.json",
-  JSON.stringify(packageJSON, null, "  "),
-  "utf8"
-);
-fs.writeFileSync(
-  "gramjs/Version.ts",
-  `export const version = "${packageJSON.version}";`,
-  "utf8"
-);
+// delete packageJSON.dependencies["node-localstorage"];
+// delete packageJSON.dependencies["socks"];
+// const oldVersion = packageJSON.version.split(".");
+// +oldVersion[2]++;
+// packageJSON.version = oldVersion.join(".");
+// console.log("browser version is", packageJSON.version);
+// fs.writeFileSync(
+//   "package.json",
+//   JSON.stringify(packageJSON, null, "  "),
+//   "utf8"
+// );
+// fs.writeFileSync(
+//   "gramjs/Version.ts",
+//   `export const version = "${packageJSON.version}";`,
+//   "utf8"
+// );
 
-renameFiles("tempBrowser", "rename");
+// renameFiles("tempBrowser", "rename");
 
 const npmi = exec("npm i");
 npmi.on("close", (code) => {

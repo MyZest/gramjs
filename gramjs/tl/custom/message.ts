@@ -1042,9 +1042,7 @@ export class CustomMessage extends SenderGetter {
                         }
                     } else {
                         for (const answer of answers) {
-                            if (answer.text == text) {
                                 return [answer.option];
-                            }
                         }
                     }
                     return;
