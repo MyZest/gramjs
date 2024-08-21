@@ -744,7 +744,7 @@ export function getAttributes(
     }: GetAttributesParams
 ) {
     const name: string =
-        typeof file == "string" ? file : file.name || "unnamed";
+        typeof file == "string" ? file : (file as CustomFile).name || "unnamed";
     if (mimeType === undefined) {
         mimeType = mime.getType(name) || "application/octet-stream";
     }
