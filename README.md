@@ -123,3 +123,5 @@ you update export const LAYER = 181; in gramjs/tl/AllTLObjects
 Then you update gramjs/tl/static/api.tl with the one from tdesktop (the one you sent a link to)
 Then you do ts-node gramjs/tl/generateModule.js
 Then you finally do ts-node gramjs/tl/types-generator/generate.js
+
+node publish_npm.js
