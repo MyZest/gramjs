@@ -1511,10 +1511,10 @@ export namespace Api {
     round?: boolean;
     voice?: boolean;
     document?: Api.TypeDocument;
-    altDocument?: Api.TypeDocument;
+    altDocuments?: Api.TypeDocument[];
     ttlSeconds?: int;
   }> {
-  CONSTRUCTOR_ID: 1291114285;
+  CONSTRUCTOR_ID: 3713469397;
   SUBCLASS_OF_ID: 1198308914;
   classType: "constructor";
   className: "MessageMediaDocument";
@@ -1526,7 +1526,7 @@ export namespace Api {
     round?: boolean;
     voice?: boolean;
     document?: Api.TypeDocument;
-    altDocument?: Api.TypeDocument;
+    altDocuments?: Api.TypeDocument[];
     ttlSeconds?: int;
   }
   export class MessageMediaWebPage extends VirtualClass<{
@@ -6140,8 +6140,9 @@ export namespace Api {
     h: int;
     preloadPrefixSize?: int;
     videoStartTs?: double;
+    videoCodec?: string;
   }> {
-  CONSTRUCTOR_ID: 389652397;
+  CONSTRUCTOR_ID: 1137015880;
   SUBCLASS_OF_ID: 4146719643;
   classType: "constructor";
   className: "DocumentAttributeVideo";
@@ -6155,6 +6156,7 @@ export namespace Api {
     h: int;
     preloadPrefixSize?: int;
     videoStartTs?: double;
+    videoCodec?: string;
   }
   export class DocumentAttributeAudio extends VirtualClass<{
     // flags: null;
@@ -6889,6 +6891,18 @@ export namespace Api {
     buttonId: int;
     peerType: Api.TypeRequestPeerType;
     maxQuantity: int;
+  }
+  export class KeyboardButtonCopy extends VirtualClass<{
+    text: string;
+    copyText: string;
+  }> {
+  CONSTRUCTOR_ID: 1976723854;
+  SUBCLASS_OF_ID: 195916963;
+  classType: "constructor";
+  className: "KeyboardButtonCopy";
+  static fromReader(reader: Reader): KeyboardButtonCopy;
+    text: string;
+    copyText: string;
   }
   export class KeyboardButtonRow extends VirtualClass<{
     buttons: Api.TypeKeyboardButton[];
@@ -26679,14 +26693,20 @@ export namespace Api {
       enabled: Bool;
     }
     export class ClickSponsoredMessage extends Request<Partial<{
+      // flags: null;
+      media?: boolean;
+      fullscreen?: boolean;
       channel: Api.TypeEntityLike;
       randomId: bytes;
     }>, Bool> {
-    CONSTRUCTOR_ID: 414170259;
+    CONSTRUCTOR_ID: 21257589;
     SUBCLASS_OF_ID: 4122188204;
     classType: "request";
     className: "channels.ClickSponsoredMessage";
     static fromReader(reader: Reader): ClickSponsoredMessage;
+      // flags: null;
+      media?: boolean;
+      fullscreen?: boolean;
       channel: Api.TypeEntityLike;
       randomId: bytes;
     }
@@ -29034,7 +29054,7 @@ export namespace Api {
   export type TypeStickerSet = StickerSet;
   export type TypeBotCommand = BotCommand;
   export type TypeBotInfo = BotInfo;
-  export type TypeKeyboardButton = KeyboardButton | KeyboardButtonUrl | KeyboardButtonCallback | KeyboardButtonRequestPhone | KeyboardButtonRequestGeoLocation | KeyboardButtonSwitchInline | KeyboardButtonGame | KeyboardButtonBuy | KeyboardButtonUrlAuth | InputKeyboardButtonUrlAuth | KeyboardButtonRequestPoll | InputKeyboardButtonUserProfile | KeyboardButtonUserProfile | KeyboardButtonWebView | KeyboardButtonSimpleWebView | KeyboardButtonRequestPeer | InputKeyboardButtonRequestPeer;
+  export type TypeKeyboardButton = KeyboardButton | KeyboardButtonUrl | KeyboardButtonCallback | KeyboardButtonRequestPhone | KeyboardButtonRequestGeoLocation | KeyboardButtonSwitchInline | KeyboardButtonGame | KeyboardButtonBuy | KeyboardButtonUrlAuth | InputKeyboardButtonUrlAuth | KeyboardButtonRequestPoll | InputKeyboardButtonUserProfile | KeyboardButtonUserProfile | KeyboardButtonWebView | KeyboardButtonSimpleWebView | KeyboardButtonRequestPeer | InputKeyboardButtonRequestPeer | KeyboardButtonCopy;
   export type TypeKeyboardButtonRow = KeyboardButtonRow;
   export type TypeReplyMarkup = ReplyKeyboardHide | ReplyKeyboardForceReply | ReplyKeyboardMarkup | ReplyInlineMarkup;
   export type TypeMessageEntity = MessageEntityUnknown | MessageEntityMention | MessageEntityHashtag | MessageEntityBotCommand | MessageEntityUrl | MessageEntityEmail | MessageEntityBold | MessageEntityItalic | MessageEntityCode | MessageEntityPre | MessageEntityTextUrl | MessageEntityMentionName | InputMessageEntityMentionName | MessageEntityPhone | MessageEntityCashtag | MessageEntityUnderline | MessageEntityStrike | MessageEntityBankCard | MessageEntitySpoiler | MessageEntityCustomEmoji | MessageEntityBlockquote;

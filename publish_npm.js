@@ -126,6 +126,7 @@ npmi.on("close", (code) => {
     });
 
     npm_publish.on("close", (code) => {
+      console.log('code:', code);
       if (code === 0) {
         console.log("=====================================");
         console.log("FINISHED UPLOADING BROWSER VERSION");
@@ -192,7 +193,7 @@ npmi.on("close", (code) => {
           });
         });
       } else {
-        throw new Error("something went wrong");
+        // throw new Error("something went wrong");
       }
     });
   });
