@@ -2117,8 +2117,9 @@ export namespace Api {
     months: int;
     cryptoCurrency?: string;
     cryptoAmount?: long;
+    message?: Api.TypeTextWithEntities;
   }> {
-  CONSTRUCTOR_ID: 3359468268;
+  CONSTRUCTOR_ID: 1818391802;
   SUBCLASS_OF_ID: 2256589094;
   classType: "constructor";
   className: "MessageActionGiftPremium";
@@ -2129,6 +2130,7 @@ export namespace Api {
     months: int;
     cryptoCurrency?: string;
     cryptoAmount?: long;
+    message?: Api.TypeTextWithEntities;
   }
   export class MessageActionTopicCreate extends VirtualClass<{
     // flags: null;
@@ -2213,8 +2215,9 @@ export namespace Api {
     amount?: long;
     cryptoCurrency?: string;
     cryptoAmount?: long;
+    message?: Api.TypeTextWithEntities;
   }> {
-  CONSTRUCTOR_ID: 1737240073;
+  CONSTRUCTOR_ID: 1456486804;
   SUBCLASS_OF_ID: 2256589094;
   classType: "constructor";
   className: "MessageActionGiftCode";
@@ -2229,6 +2232,7 @@ export namespace Api {
     amount?: long;
     cryptoCurrency?: string;
     cryptoAmount?: long;
+    message?: Api.TypeTextWithEntities;
   }
   export class MessageActionGiveawayLaunch extends VirtualClass<{
     // flags: null;
@@ -12956,8 +12960,9 @@ export namespace Api {
     boostPeer?: Api.TypeInputPeer;
     currency: string;
     amount: long;
+    message?: Api.TypeTextWithEntities;
   }> {
-  CONSTRUCTOR_ID: 2743099199;
+  CONSTRUCTOR_ID: 4219011987;
   SUBCLASS_OF_ID: 3886290765;
   classType: "constructor";
   className: "InputStorePaymentPremiumGiftCode";
@@ -12967,6 +12972,7 @@ export namespace Api {
     boostPeer?: Api.TypeInputPeer;
     currency: string;
     amount: long;
+    message?: Api.TypeTextWithEntities;
   }
   export class InputStorePaymentPremiumGiveaway extends VirtualClass<{
     // flags: null;
