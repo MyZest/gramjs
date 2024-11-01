@@ -20055,6 +20055,18 @@ export namespace Api {
       views: Api.TypeStoryViews[];
       users: Api.TypeUser[];
     }
+    export class MediaAreaUrl extends VirtualClass<{
+        coordinates: Api.TypeMediaAreaCoordinates;
+        url: string;
+    }> {
+        CONSTRUCTOR_ID: 926421125;
+        SUBCLASS_OF_ID: 4084038642;
+        classType: "constructor";
+        className: "MediaAreaUrl";
+        static fromReader(reader: Reader): MediaAreaUrl;
+        coordinates: Api.TypeMediaAreaCoordinates;
+        url: string;
+    }
     export class PeerStories extends VirtualClass<{
       stories: Api.TypePeerStories;
       chats: Api.TypeChat[];
