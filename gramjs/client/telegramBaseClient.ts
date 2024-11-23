@@ -58,11 +58,16 @@ export interface TelegramClientParams {
      */
     requestRetries?: number;
     /**
-     * How many times the reconnection should retry, either on the initial connection or when Telegram disconnects us.<br/>
+     * How many times the connection should retry, either on the initial connection or when Telegram disconnects us.<br/>
      * May be set to a negative or undefined value for infinite retries, but this is not recommended, since the program can get stuck in an infinite loop.<br/>
      * defaults to 5
      */
     connectionRetries?: number;
+    /**
+     * How many times to reconnect before giving up. This happens after the initial connection is finished<br/>
+     * defaults to infinity
+     */
+    reconnectRetries?: number;
     /**
      * Experimental proxy to be used for the connection. (only supports MTProxies)
      */
@@ -172,6 +177,8 @@ export abstract class TelegramBaseClient {
     /** @hidden */
     public _connectionRetries: number;
     /** @hidden */
+    public _reconnectRetries: number;
+    /** @hidden */
     public _retryDelay: number;
     /** @hidden */
     public _timeout: number;
@@ -212,7 +219,7 @@ export abstract class TelegramBaseClient {
         [ReturnType<typeof setTimeout>, Api.TypeUpdate[]]
     >();
     /** @hidden */
-    private _exportedSenderPromises = new Map<number, Promise<MTProtoSender>>();
+    public _exportedSenderPromises = new Map<number, Promise<MTProtoSender>>();
     /** @hidden */
     private _exportedSenderReleaseTimeouts = new Map<
         number,
@@ -270,6 +277,7 @@ export abstract class TelegramBaseClient {
         this._requestRetries = clientParams.requestRetries!;
         this._downloadRetries = clientParams.downloadRetries!;
         this._connectionRetries = clientParams.connectionRetries!;
+        this._reconnectRetries = clientParams.reconnectRetries!;
         this._retryDelay = clientParams.retryDelay || 0;
         this._timeout = clientParams.timeout!;
         this._autoReconnect = clientParams.autoReconnect!;
@@ -284,11 +292,11 @@ export abstract class TelegramBaseClient {
         }
         this._connection = clientParams.connection;
         let initProxy;
-        if (this._proxy?.MTProxy) {
+        if (this._proxy && "MTProxy" in this._proxy) {
             this._connection = ConnectionTCPMTProxyAbridged;
             initProxy = new Api.InputClientProxy({
-                address: this._proxy!.ip,
-                port: this._proxy!.port,
+                address: this._proxy.ip,
+                port: this._proxy.port,
             });
         }
         this._initRequest = new Api.InitConnection({
@@ -535,7 +543,15 @@ export abstract class TelegramBaseClient {
             dcId,
             setTimeout(() => {
                 this._exportedSenderReleaseTimeouts.delete(dcId);
-                sender.disconnect();
+                if (sender._pendingState.values().length) {
+                    console.log(
+                        "sender already has some hanging states. reconnecting"
+                    );
+                    sender._reconnect();
+                    this._borrowExportedSender(dcId, false, sender);
+                } else {
+                    sender.disconnect();
+                }
             }, EXPORTED_SENDER_RELEASE_TIMEOUT)
         );
 
@@ -556,6 +572,8 @@ export abstract class TelegramBaseClient {
             onConnectionBreak: this._cleanupExportedSender.bind(this),
             client: this as unknown as TelegramClient,
             securityChecks: this._securityChecks,
+            _exportedSenderPromises: this._exportedSenderPromises,
+            reconnectRetries: this._reconnectRetries,
         });
     }
 
