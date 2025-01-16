@@ -253,7 +253,7 @@ export abstract class TelegramBaseClient {
         } else {
             this._log = new Logger();
         }
-        this._log.info("Running gramJS version " + version);
+        this._log.info("Running TelegramClient version " + version);
         if (session && typeof session == "string") {
             session = new StoreSession(session);
         }
