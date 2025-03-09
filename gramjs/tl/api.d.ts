@@ -20854,6 +20854,22 @@ export namespace Api {
       views: Api.TypeStoryViews[];
       users: Api.TypeUser[];
     }
+    export class MediaAreaWeather extends VirtualClass<{
+        coordinates: Api.TypeMediaAreaCoordinates;
+        emoji: string;
+        temperatureC: double;
+        color: int;
+    }> {
+        CONSTRUCTOR_ID: 1235637404;
+        SUBCLASS_OF_ID: 4084038642;
+        classType: "constructor";
+        className: "MediaAreaWeather";
+        static fromReader(reader: Reader): MediaAreaWeather;
+        coordinates: Api.TypeMediaAreaCoordinates;
+        emoji: string;
+        temperatureC: double;
+        color: int;
+    }
     export class PeerStories extends VirtualClass<{
       stories: Api.TypePeerStories;
       chats: Api.TypeChat[];
